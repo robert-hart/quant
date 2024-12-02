@@ -1,0 +1,49 @@
+<project name="opencv-project" default="run" basedir=".">
+    <!-- Directories -->
+    <property name="src.dir" value="src" />
+    <property name="build.dir" value="build" />
+    <property name="lib.dir" value="lib" />
+    <property name="dist.dir" value="dist" />
+
+    <!-- OpenCV Native and Java Libraries -->
+    <property name="opencv.jar" value="/usr/local/share/OpenCV/java/opencv-300.jar" />
+    <property name="opencv.native" value="/usr/local/lib" />
+
+    <!-- Clean Task -->
+    <target name="clean">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <!-- Compile Task -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.dir}" />
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement location="${opencv.jar}" />
+                <fileset dir="${lib.dir}">
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Create JAR Task -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}" />
+        <jar destfile="${dist.dir}/opencv-project.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.example.Main-Class" />
+                <attribute name="Class-Path" value="lib/" />
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Run Task -->
+    <target name="run" depends="jar">
+        <java jar="${dist.dir}/opencv-project.jar" fork="true">
+            <jvmarg value="-Djava.library.path=${opencv.native}" />
+        </java>
+    </target>
+</project>
+
