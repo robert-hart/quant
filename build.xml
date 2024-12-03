@@ -2,10 +2,10 @@
     <!-- Directories -->
     <property name="src.dir" value="src" />
     <property name="build.dir" value="build" />
-    <property name="lib.dir" value="lib" />
     <property name="dist.dir" value="dist" />
+    <property name="lib.dir" value="lib" />
 
-    <!-- OpenCV Native and Java Libraries -->
+    <!-- OpenCV paths -->
     <property name="opencv.jar" value="/usr/local/share/OpenCV/java/opencv-300.jar" />
     <property name="opencv.native" value="/usr/local/lib" />
 
@@ -33,8 +33,8 @@
         <mkdir dir="${dist.dir}" />
         <jar destfile="${dist.dir}/opencv-project.jar" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="com.example.Main-Class" />
-                <attribute name="Class-Path" value="lib/" />
+                <attribute name="Main-Class" value="com.example.IrisSegmentation" />
+                <attribute name="Class-Path" value="lib/ opencv-300.jar" />
             </manifest>
         </jar>
     </target>
@@ -46,4 +46,3 @@
         </java>
     </target>
 </project>
-
